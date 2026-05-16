@@ -12,28 +12,21 @@ const RightPanel = () => {
 
   const fetchMarketData = async () => {
     try {
-      // Example stocks
       const stocks = ["AAPL", "NVDA", "TSLA", "META", "MSFT"];
-
       let marketData = [];
 
       for (const symbol of stocks) {
         const res = await API.get(`/api/stocks/${symbol}`);
-
         const stock = res.data;
 
-        // Alpha Vantage formatted candle array
         if (Array.isArray(stock) && stock.length > 1) {
-          const latest = stock[0];
-          const previous = stock[1];
+          const latest = stock[stock.length - 1];
+          const previous = stock[stock.length - 2];
 
           const percent =
             ((latest.close - previous.close) / previous.close) * 100;
 
-          marketData.push({
-            symbol,
-            percent,
-          });
+          marketData.push({ symbol, percent });
         }
       }
 
@@ -43,18 +36,13 @@ const RightPanel = () => {
         setGainer(marketData[0]);
         setLoser(marketData[marketData.length - 1]);
 
-        // Simple sentiment logic
         const avg =
           marketData.reduce((sum, item) => sum + item.percent, 0) /
           marketData.length;
 
-        if (avg > 1) {
-          setSentiment("Bullish");
-        } else if (avg < -1) {
-          setSentiment("Bearish");
-        } else {
-          setSentiment("Neutral");
-        }
+        if (avg > 1) setSentiment("Bullish");
+        else if (avg < -1) setSentiment("Bearish");
+        else setSentiment("Neutral");
       }
     } catch (error) {
       console.error("Market Overview Error:", error);
@@ -67,36 +55,28 @@ const RightPanel = () => {
         Market Overview
       </h2>
 
-      {/* Top Gainer */}
       <div className="bg-gray-900 p-4 rounded-xl mb-4 border border-gray-800">
         <p className="text-xs text-gray-400">Top Gainer</p>
-
         <p className="text-green-400 text-lg font-bold">
           {gainer?.symbol || "Loading..."}
         </p>
-
         <p className="text-green-400 text-sm">
           {gainer ? `${gainer.percent.toFixed(2)}%` : ""}
         </p>
       </div>
 
-      {/* Top Loser */}
       <div className="bg-gray-900 p-4 rounded-xl mb-4 border border-gray-800">
         <p className="text-xs text-gray-400">Top Loser</p>
-
         <p className="text-red-400 text-lg font-bold">
           {loser?.symbol || "Loading..."}
         </p>
-
         <p className="text-red-400 text-sm">
           {loser ? `${loser.percent.toFixed(2)}%` : ""}
         </p>
       </div>
 
-      {/* Market Sentiment */}
-      <div className="bg-gray-900 p-4 rounded-xl border border-gray-800">
+      <div className="bg-gray-900 p-4 rounded-xl mb-4 border border-gray-800">
         <p className="text-xs text-gray-400">Market Sentiment</p>
-
         <p
           className={`text-lg font-bold ${
             sentiment === "Bullish"
@@ -107,6 +87,17 @@ const RightPanel = () => {
           }`}
         >
           {sentiment}
+        </p>
+      </div>
+
+      <div className="bg-yellow-500/10 p-4 rounded-xl border border-yellow-500/40">
+        <p className="text-yellow-300 text-sm font-semibold mb-2">
+          ⚠️ Disclaimer
+        </p>
+        <p className="text-yellow-100 text-xs leading-relaxed">
+          This platform uses real-time or near real-time market data for
+          educational and research purposes only. AI recommendations are
+          experimental and should not be considered financial advice.
         </p>
       </div>
     </div>
