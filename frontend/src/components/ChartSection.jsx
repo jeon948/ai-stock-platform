@@ -39,9 +39,7 @@ const ChartSection = ({ symbol }) => {
     chartInstance.current = chart;
     seriesRef.current = candleSeries;
 
-    return () => {
-      chart.remove();
-    };
+    return () => chart.remove();
   }, []);
 
   useEffect(() => {
@@ -107,7 +105,13 @@ const ChartSection = ({ symbol }) => {
 
       {ai && (
         <div className="bg-gray-800 p-4 rounded-xl mt-6 border border-gray-700">
-          <h2 className="font-bold mb-2">🤖 AI Recommendation</h2>
+          <h2 className="font-bold mb-3">🤖 AI Recommendation</h2>
+
+          <div className="mb-4 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/40 text-yellow-300 text-xs leading-relaxed">
+            ⚠️ Disclaimer: This platform uses real-time or near real-time market
+            data for educational purposes only. AI recommendations are
+            experimental and should not be considered financial advice.
+          </div>
 
           <p
             className={`text-xl font-bold ${
@@ -121,22 +125,13 @@ const ChartSection = ({ symbol }) => {
             {ai.action}
           </p>
 
-          <p className="text-gray-400 text-sm">
-            Confidence: {ai.confidence}%
-          </p>
+          <p className="text-gray-400 text-sm">Confidence: {ai.confidence}%</p>
 
           <ul className="text-sm mt-2 text-gray-300">
             {ai.reason?.map((r, i) => (
               <li key={i}>• {r}</li>
             ))}
           </ul>
-
-          <div className="mt-4 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-xs leading-relaxed">
-            ⚠️ Disclaimer: This platform uses real-time or near real-time
-            market data from third-party APIs for educational and research
-            purposes only. AI recommendations are experimental and should not
-            be considered financial or investment advice.
-          </div>
         </div>
       )}
 
