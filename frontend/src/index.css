@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling (Trading UI Theme) */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #020617;
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar (Pro look) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Smooth transitions everywhere */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Utility classes for reuse */
+.card {
+  @apply bg-gray-900 rounded-xl border border-gray-800 p-4 shadow-md;
+}
+
+.text-profit {
+  color: #22c55e;
+}
+
+.text-loss {
+  color: #ef4444;
+}
