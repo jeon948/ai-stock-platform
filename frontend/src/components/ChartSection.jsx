@@ -130,6 +130,13 @@ const ChartSection = ({ symbol }) => {
               <li key={i}>• {r}</li>
             ))}
           </ul>
+
+          <div className="mt-4 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-xs leading-relaxed">
+            ⚠️ Disclaimer: This platform uses real-time or near real-time
+            market data from third-party APIs for educational and research
+            purposes only. AI recommendations are experimental and should not
+            be considered financial or investment advice.
+          </div>
         </div>
       )}
 
