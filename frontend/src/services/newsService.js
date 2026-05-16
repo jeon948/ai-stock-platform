@@ -3,7 +3,7 @@ import axios from "axios";
 export const getNews = async (symbol) => {
   try {
     const res = await axios.get(
-      `http://localhost:5000/news/${symbol}`
+      `${import.meta.env.VITE_API_URL}/news/${symbol}`
     );
 
     // ✅ backend returns { symbol, sentiment, articles }
